@@ -15,7 +15,8 @@ public class CompleteHybridAlgorithmWithTest {
    private BigInteger f,g;
    private int messagelength;
    
-   CompleteHybridAlgorithmWithTest()
+   //constructor
+   CompleteHybridAlgorithmWithTest(int N)
    {
       BigInteger p = BigInteger.probablePrime(N/2, random);
       BigInteger q = BigInteger.probablePrime(N/2, random);
@@ -26,23 +27,22 @@ public class CompleteHybridAlgorithmWithTest {
       privateKey = publicKey.modInverse(phi);
       f = (publicKey.multiply(two)).add(one);
       g = modulus.subtract(one);
-      f = FinalPermutation(f);
-      
+      publicKey = FinalPermutation(f);
+      modulus = g.add(one);
+
    }
    
    BigInteger encrypt(BigInteger message) 
    {
       messagelength = message.toString().length();
-      publicKey = inverseFinalPermutation(f);
-      publicKey = (publicKey.subtract(one).divide(two));
-      modulus = g.add(one);
+      publicKey = inverseFinalPermutation(publicKey);
+      publicKey = (f.subtract(one).divide(two));
       
       return initialPermutation(message).modPow(publicKey, modulus);
    }
 
    BigInteger decrypt(BigInteger encrypted) 
    {
-      modulus = g.add(one); 
       return inverseInitialPermutation(encrypted.modPow(privateKey, modulus));
    }
 
@@ -87,7 +87,6 @@ public class CompleteHybridAlgorithmWithTest {
     //an array containing new arrangement after initial permutation
     for (int i=0; i<temp.length(); i++)
     {
-        //i+1 is to make the table number start from 1 and not 0
         initialPermutationArray[i] = plaintextArray[permutationNumbers[i]-1];
     }
     
@@ -233,7 +232,7 @@ public class CompleteHybridAlgorithmWithTest {
       Scanner input = new Scanner(System.in);
       long startTime = System.nanoTime();
        
-      HybridMRSADES key = new HybridMRSADES(1024);
+      CompleteHybridAlgorithmWithTest key = new CompleteHybridAlgorithmWithTest(1024);
       startTime = System.nanoTime() - startTime;
       System.out.println("Time taken to generate key = " + (startTime));
       System.out.println(key);
