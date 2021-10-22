@@ -1,4 +1,4 @@
-# MRSA-DES-hybrid
+# MRSA-DES-hybrid by @kenozordi 2019
 A Hybrid Encryption Algorithm using both Modified Rivest Shamir Adleman (MRSA) Algorithm and Data Encryption Standard (DES) Algorithm.
 
 The algorithm is a hybrid algorithm consisting of two algorithms
